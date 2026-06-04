@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pixellers Themes Professional Features - Explore all features.">
+  <meta name="description" content="Pixellers Themes Professional Features - Explore all bundled extensions and options.">
   <title>Professional Features | Pixellers Themes WooCommerce Theme</title>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/imgs/fevicon.png">
@@ -18,90 +18,225 @@
   <!-- Custom Style CSS -->
   <link rel="stylesheet" href="assets/css/style.css?v=1.2">
   <style>
-    /* Standalone page styling keeping the theme system */
-    .features-page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-      padding: 40px 20px;
+    /* Styling specifically for the Features Page */
+    .features-hero {
+      position: relative;
+      padding: calc(var(--nav-height) + 80px) 0 60px 0;
+      background: radial-gradient(circle at 80% 20%, rgba(121, 200, 67, 0.05) 0%, transparent 60%), 
+                  linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%);
       text-align: center;
+      overflow: hidden;
     }
 
-    .features-page-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .features-hero-glow {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(121, 200, 67, 0.08) 0%, transparent 70%);
+      filter: blur(50px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .features-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .features-badge {
+      display: inline-block;
       font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-      margin-bottom: 40px;
-      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      background-color: rgba(121, 200, 67, 0.1);
+      padding: 6px 16px;
+      border-radius: 100px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(121, 200, 67, 0.05);
     }
 
-    .features-page-logo svg {
-      color: var(--accent-dark);
-    }
-
-    .features-page-content {
-      max-width: 600px;
-      background-color: #ffffff;
-      padding: 60px 40px;
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border-color-card);
-    }
-
-    .features-page-title {
+    .features-hero-title {
       font-family: var(--font-display);
-      font-size: 2.2rem;
+      font-size: 3.2rem;
       font-weight: 800;
+      line-height: 1.15;
       color: var(--accent-dark);
-      margin-bottom: 16px;
-      letter-spacing: -1px;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
     }
 
-    .features-page-subtitle {
+    .features-hero-title span {
+      background: linear-gradient(135deg, var(--accent-green) 0%, #4582ec 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .features-hero-desc {
       font-family: var(--font-primary);
-      font-size: 1.05rem;
-      line-height: 1.6;
+      font-size: 1.1rem;
       color: var(--text-secondary);
+      line-height: 1.7;
       margin-bottom: 40px;
       font-weight: 500;
     }
 
-    .features-page-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-weight: 700;
+    /* Filters Bar */
+    .filter-tabs-container {
+      margin-bottom: 55px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 12px;
+      background-color: #ffffff;
+      padding: 8px;
+      border-radius: 100px;
+      box-shadow: var(--shadow-sticky);
+      border: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-tab-btn {
       font-family: var(--font-display);
-      font-size: 0.9rem;
-      color: #ffffff;
-      background-color: var(--accent-dark);
-      border-radius: var(--border-radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      padding: 12px 24px;
+      border-radius: 100px;
+      border: none;
+      background: none;
+      cursor: pointer;
       transition: all var(--transition-fast);
-      text-decoration: none;
+    }
+
+    .filter-tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .filter-tab-btn.active {
+      background-color: var(--accent-dark);
+      color: #ffffff;
       box-shadow: 0 4px 12px rgba(30, 32, 36, 0.15);
     }
 
-    .features-page-btn:hover {
-      background-color: var(--accent-dark-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(30, 32, 36, 0.25);
+    /* Features Grid Section */
+    .features-grid-section {
+      background-color: #ffffff;
+      padding: 0 0 100px 0;
+      position: relative;
     }
 
-    @media (max-width: 480px) {
-      .features-page-content {
-        padding: 40px 20px;
-      }
+    /* Animation and alignment styles for filtering */
+    .feature-item {
+      transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+    }
 
-      .features-page-title {
-        font-size: 1.8rem;
+    .feature-item.fade-out {
+      opacity: 0;
+      transform: scale(0.95) translateY(15px);
+      pointer-events: none;
+    }
+
+    .feature-item.fade-in {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .feature-item.hidden {
+      display: none !important;
+    }
+
+    /* CTA Section */
+    .features-cta-section {
+      background-color: var(--accent-dark);
+      padding: 100px 0;
+      color: #ffffff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .features-cta-glow {
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(121, 200, 67, 0.15) 0%, transparent 70%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    .features-cta-container {
+      max-width: 750px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .features-cta-title {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .features-cta-desc {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+
+    .features-cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 768px) {
+      .features-hero-title {
+        font-size: 2.4rem;
+      }
+      .features-hero {
+        padding-top: calc(var(--nav-height) + 50px);
+      }
+      .filter-tabs {
+        border-radius: 20px;
+        padding: 6px;
+      }
+      .filter-tab-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+      }
+      .features-cta-title {
+        font-size: 2rem;
+      }
+      .features-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      .features-cta-buttons .btn {
+        width: 100%;
+        max-width: 280px;
       }
     }
   </style>
@@ -109,25 +244,323 @@
 
 <body class="light-theme">
 
-  <div class="features-page-wrapper">
-    <a href="index.html" class="features-page-logo">
-      <img src="assets/imgs/fevicon.png" alt="Pixellers Themes Logo" class="logo-icon" width="32" height="32">
-      <span class="logo-text">Pixellers</span>
-    </a>
-
-    <div class="features-page-content">
-      <h1 class="features-page-title">Professional Features</h1>
-      <p class="features-page-subtitle">
-        This page lists all the premium extensions, elements, and custom filters bundled with Pixellers Themes. Full details and
-        descriptions will be updated soon.
-      </p>
-      <a href="index.html" class="features-page-btn">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>Back to Home</span>
+  <!-- Overlapping & Sticky Header Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/imgs/fevicon.png" alt="Pixellers Themes Logo" class="logo-icon" width="28" height="28">
+        <span class="logo-text">Pixellers</span>
       </a>
-    </div>
-  </div>
 
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="index.html#demos" class="nav-link">150+ PREBUILT WEBSITES</a></li>
+          <li><a href="features.html" class="nav-link">FEATURES</a></li>
+          <li><a href="shop.html" class="nav-link">SHOP</a></li>
+          <li><a href="pages.html" class="nav-link">PAGES</a></li>
+          <li><a href="index.html#faq" class="nav-link">FAQ</a></li>
+          <li><a href="support.html" class="nav-link">SUPPORT</a></li>
+          <li><a href="more.html" class="nav-link">MORE</a></li>
+          <li class="mobile-only-action">
+            <a href="#" class="btn btn-green mobile-nav-btn">
+              <i class="fa-solid fa-bolt"></i> Buy Pixellers Themes
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#" class="btn btn-green nav-btn">
+          <i class="fa-solid fa-bolt"></i> Buy Pixellers Themes
+        </a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Showcase Section -->
+  <section class="features-hero">
+    <div class="features-hero-glow"></div>
+    <div class="container features-hero-content" data-aos="fade-up">
+      <span class="features-badge">Theme Arsenal</span>
+      <h1 class="features-hero-title">Professional WooCommerce <span>Features</span></h1>
+      <p class="features-hero-desc">
+        Pixellers Themes is engineered to load at record speeds, customize without code limits, and supercharge sales right out of the box. Explore the specialized tools engineered to build your brand.
+      </p>
+    </div>
+  </section>
+
+  <!-- Dynamic Features Display -->
+  <section class="features-grid-section">
+    <div class="container">
+      
+      <!-- Interactive Category Selectors -->
+      <div class="filter-tabs-container" data-aos="fade-up" data-aos-delay="100">
+        <div class="filter-tabs">
+          <button class="filter-tab-btn active" data-filter="all">All Features</button>
+          <button class="filter-tab-btn" data-filter="builder">Core Builder</button>
+          <button class="filter-tab-btn" data-filter="ecommerce">E-Commerce Power</button>
+          <button class="filter-tab-btn" data-filter="performance">Performance & SEO</button>
+        </div>
+      </div>
+
+      <!-- Feature Grid Cards -->
+      <div class="features-grid" data-aos="fade-up" data-aos-delay="200">
+        
+        <!-- Feature 1: Grid layout for Elementor -->
+        <div class="feature-item" data-category="builder">
+          <h3 class="feature-title">Grid layout for Elementor</h3>
+          <p class="feature-description">
+            To make appropriately aligned webpages within Elementor, our Grid System will help you a lot.
+          </p>
+        </div>
+
+        <!-- Feature 2: Sticky column Elementor -->
+        <div class="feature-item" data-category="builder">
+          <span class="feature-badge badge-hot">Hot</span>
+          <h3 class="feature-title">Sticky column Elementor</h3>
+          <p class="feature-description">
+            This effect allowing the text to remain stationary when scrolling the page up and down. Check how it works!
+          </p>
+        </div>
+
+        <!-- Feature 3: Product variation gallery -->
+        <div class="feature-item" data-category="ecommerce">
+          <span class="feature-badge badge-new">New</span>
+          <h3 class="feature-title">Product variation gallery</h3>
+          <p class="feature-description">
+            Showcase multiple image galleries for each product variation, improving customer choice and clarity.
+          </p>
+        </div>
+
+        <!-- Feature 4: Floating effects -->
+        <div class="feature-item" data-category="builder">
+          <h3 class="feature-title">Floating effects</h3>
+          <p class="feature-description">
+            Create stunning animations for any widget using Elementor floating effect feature.
+          </p>
+        </div>
+
+        <!-- Feature 5: Built-in mega menu -->
+        <div class="feature-item" data-category="builder">
+          <h3 class="feature-title">Built-in mega menu</h3>
+          <p class="feature-description">
+            That's a pretty good feature — mega menus provide a user-friendly option to highlight deeper content on your site.
+          </p>
+        </div>
+
+        <!-- Feature 6: Advanced product filters -->
+        <div class="feature-item" data-category="ecommerce">
+          <h3 class="feature-title">Advanced product filters</h3>
+          <p class="feature-description">
+            By adding this filtering functionality, you enable customers to browse your products according to their preferences with best UI/UX.
+          </p>
+        </div>
+
+        <!-- Feature 7: AJAX full screen search -->
+        <div class="feature-item" data-category="ecommerce">
+          <h3 class="feature-title">AJAX full screen search</h3>
+          <p class="feature-description">
+            Find the products in seconds with optimized AJAX search function.
+          </p>
+        </div>
+
+        <!-- Feature 8: Child Theme -->
+        <div class="feature-item" data-category="performance">
+          <h3 class="feature-title">Child Theme</h3>
+          <p class="feature-description">
+            Child theme files are included in the package, so you don't need to create them yourself.
+          </p>
+        </div>
+
+        <!-- Feature 9: RTL Support -->
+        <div class="feature-item" data-category="performance">
+          <h3 class="feature-title">RTL Support</h3>
+          <p class="feature-description">
+            Pixellers Themes fully supports RTL (Right-To-Left). Do not need to worry about it anymore because this works automatically.
+          </p>
+        </div>
+
+        <!-- Feature 10: Full AJAX shop & pagination -->
+        <div class="feature-item" data-category="ecommerce">
+          <h3 class="feature-title">Full AJAX shop & pagination</h3>
+          <p class="feature-description">
+            Replace your current pagination with infinite scroll, load more, or Ajax pagination - whichever suits your requirements.
+          </p>
+        </div>
+
+        <!-- Feature 11: AJAX Quick View -->
+        <div class="feature-item" data-category="ecommerce">
+          <span class="feature-badge badge-hot">Hot</span>
+          <h3 class="feature-title">AJAX Quick View</h3>
+          <p class="feature-description">
+            Let customers view product details and add to cart instantly from a light box popup without leaving the catalog.
+          </p>
+        </div>
+
+        <!-- Feature 12: Wishlist & Product Compare -->
+        <div class="feature-item" data-category="ecommerce">
+          <span class="feature-badge badge-new">New</span>
+          <h3 class="feature-title">Wishlist & Product Compare</h3>
+          <p class="feature-description">
+            Provide built-in product wishlists and attribute comparison tables to help shoppers make purchasing decisions.
+          </p>
+        </div>
+
+        <!-- Feature 13: Mobile-Optimized Interface -->
+        <div class="feature-item" data-category="performance">
+          <h3 class="feature-title">Mobile-Optimized Interface</h3>
+          <p class="feature-description">
+            Every element is refined to load instantly and scale perfectly on smartphone and tablet touch screens.
+          </p>
+        </div>
+
+        <!-- Feature 14: Custom Typography Engine -->
+        <div class="feature-item" data-category="builder">
+          <h3 class="feature-title">Custom Typography Engine</h3>
+          <p class="feature-description">
+            Choose from 1,000+ Google Fonts or upload custom font files directly via the options panel.
+          </p>
+        </div>
+
+        <!-- Feature 15: Premium Sliders Included -->
+        <div class="feature-item" data-category="builder">
+          <span class="feature-badge badge-hot">Hot</span>
+          <h3 class="feature-title">Premium Sliders Included</h3>
+          <p class="feature-description">
+            Comes bundled with Slider Revolution and other visual slides plugins to create rich hero presentations.
+          </p>
+        </div>
+
+        <!-- Feature 16: Translation Ready -->
+        <div class="feature-item" data-category="performance">
+          <h3 class="feature-title">Translation Ready</h3>
+          <p class="feature-description">
+            Fully compatible with translation tools like WPML, Polylang, and Loco Translate for localized stores.
+          </p>
+        </div>
+
+        <!-- Feature 17: One-Page Checkout -->
+        <div class="feature-item" data-category="ecommerce">
+          <h3 class="feature-title">One-Page Checkout</h3>
+          <p class="feature-description">
+            Condense shopping steps into a single check-out form to minimize cart abandonment rates.
+          </p>
+        </div>
+
+        <!-- Feature 18: Custom Widget Pack -->
+        <div class="feature-item" data-category="builder">
+          <span class="feature-badge badge-new">New</span>
+          <h3 class="feature-title">Custom Widget Pack</h3>
+          <p class="feature-description">
+            Gain access to 50+ custom elements (like countdown timers, progress bars, and testimonials sliders) in Elementor.
+          </p>
+        </div>
+
+        <!-- Feature 19: SEO-Optimized Markup -->
+        <div class="feature-item" data-category="performance">
+          <h3 class="feature-title">SEO-Optimized Markup</h3>
+          <p class="feature-description">
+            Coded with absolute semantic HTML5 tags and structure, ready to achieve high ranks on search engines.
+          </p>
+        </div>
+
+        <!-- Feature 20: Unlimited Sidebars -->
+        <div class="feature-item" data-category="builder">
+          <h3 class="feature-title">Unlimited Sidebars</h3>
+          <p class="feature-description">
+            Create and assign unique custom sidebars to specific pages, product categories, or blog posts.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="site-footer" id="footer">
+    <div class="container footer-container">
+      <div class="footer-logo-wrapper" data-aos="fade-up">
+        <a href="index.html" class="footer-logo">
+          <img src="assets/imgs/fevicon.png" alt="Pixellers Themes Logo" class="logo-icon" width="28" height="28">
+          <span class="logo-text">Pixellers</span>
+        </a>
+      </div>
+
+      <h2 class="footer-title" data-aos="fade-up" data-aos-delay="100">
+        The All-in-One Solution for Building<br>Successful Websites. Start Today!
+      </h2>
+
+      <div class="footer-cta-wrapper" data-aos="fade-up" data-aos-delay="200">
+        <a href="#" class="footer-btn">
+          <i class="fa-solid fa-bolt"></i>
+          <span>Buy Pixellers Themes Now</span>
+        </a>
+      </div>
+
+      <div class="footer-social-links" data-aos="fade-up" data-aos-delay="300">
+        <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#" class="social-link" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
+
+      <p class="footer-copyright" data-aos="fade-up" data-aos-delay="400">
+        Ⓒ Created by 8theme - Power Elite ThemeForest Author.
+      </p>
+    </div>
+  </footer>
+
+  <!-- SwiperJS, GSAP, AOS Script CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <!-- Custom JS -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Dynamic Page Filter JS Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabButtons = document.querySelectorAll('.filter-tab-btn');
+      const featureItems = document.querySelectorAll('.feature-item');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Toggle active buttons
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          const filter = button.getAttribute('data-filter');
+
+          featureItems.forEach(card => {
+            const category = card.getAttribute('data-category');
+
+            if (filter === 'all' || category === filter) {
+              card.classList.remove('hidden');
+              requestAnimationFrame(() => {
+                card.classList.remove('fade-out');
+                card.classList.add('fade-in');
+              });
+            } else {
+              card.classList.add('fade-out');
+              card.classList.remove('fade-in');
+
+              const handleTransitionEnd = (e) => {
+                if (e.propertyName === 'opacity' && card.classList.contains('fade-out')) {
+                  card.classList.add('hidden');
+                  card.removeEventListener('transitionend', handleTransitionEnd);
+                }
+              };
+              card.addEventListener('transitionend', handleTransitionEnd);
+            }
+          });
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

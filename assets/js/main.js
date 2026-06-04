@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close mobile menu when clicking nav links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
+    const navLinksList = document.querySelectorAll('.nav-link');
+    navLinksList.forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('open');
         document.body.classList.remove('menu-open');
@@ -73,6 +73,130 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  }
+
+  // ----------------------------------------------------
+  // 3b. Dynamic Active Class / Highlighting for Nav Links
+  // ----------------------------------------------------
+  const navLinks = document.querySelectorAll('.nav-link');
+  const currentPath = window.location.pathname;
+  const currentPage = currentPath.split('/').pop() || 'index.html';
+  const isHomePage = currentPage === 'index.html' || currentPage === 'index.htm' || currentPage === '';
+
+  // Set initial active state based on page
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    link.classList.remove('highlight');
+
+    if (isHomePage) {
+      const hash = window.location.hash;
+      if ((href === 'index.html#demos' || href === '#demos') && (hash === '#demos' || !hash)) {
+        link.classList.add('highlight');
+      } else if ((href === 'index.html#faq' || href === '#faq') && hash === '#faq') {
+        link.classList.add('highlight');
+      }
+    } else {
+      if (href === currentPage) {
+        link.classList.add('highlight');
+      } else if (currentPage === 'faq.html' && (href === 'index.html#faq' || href === '#faq')) {
+        link.classList.add('highlight');
+      }
+    }
+  });
+
+  // Handle smooth scroll intercept on the homepage
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (isHomePage && href && (href.startsWith('index.html#') || href.startsWith('#'))) {
+      const targetId = href.includes('#') ? href.split('#')[1] : null;
+      if (!targetId) return;
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const navbarHeight = navbar ? navbar.offsetHeight : 75;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight + 5;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+
+          history.pushState(null, null, `#${targetId}`);
+
+          // Set highlight
+          navLinks.forEach(l => {
+            const h = l.getAttribute('href');
+            if (h === href) {
+              l.classList.add('highlight');
+            } else if (h.includes('#')) {
+              l.classList.remove('highlight');
+            }
+          });
+        });
+      }
+    }
+  });
+
+  // Handle direct hash navigation on page load
+  if (isHomePage && window.location.hash) {
+    const targetId = window.location.hash.substring(1);
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      setTimeout(() => {
+        const navbarHeight = navbar ? navbar.offsetHeight : 75;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight + 5;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }, 400);
+    }
+  }
+
+  // Scroll Spy for Homepage
+  if (isHomePage) {
+    const spySections = [
+      { id: 'demos', hrefs: ['index.html#demos', '#demos'] },
+      { id: 'faq', hrefs: ['index.html#faq', '#faq'] }
+    ];
+
+    const handleScrollSpy = () => {
+      let activeHrefs = null;
+      const scrollPosition = window.scrollY + (navbar ? navbar.offsetHeight : 75) + 120;
+
+      if (window.scrollY < 200) {
+        activeHrefs = ['index.html#demos', '#demos'];
+      } else {
+        spySections.forEach(sec => {
+          const el = document.getElementById(sec.id);
+          if (el) {
+            const top = el.offsetTop;
+            const height = el.offsetHeight;
+            if (scrollPosition >= top && scrollPosition < top + height) {
+              activeHrefs = sec.hrefs;
+            }
+          }
+        });
+      }
+
+      if (activeHrefs) {
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href.includes('#')) {
+            if (activeHrefs.includes(href)) {
+              link.classList.add('highlight');
+            } else {
+              link.classList.remove('highlight');
+            }
+          }
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollSpy);
+    setTimeout(handleScrollSpy, 100); 
   }
 
   // ----------------------------------------------------
