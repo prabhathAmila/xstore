@@ -18,83 +18,143 @@
   <!-- Custom Style CSS -->
   <link rel="stylesheet" href="assets/css/style.css?v=1.2">
   <style>
-    /* Standalone page styling keeping the theme system */
-    .faq-page-wrapper {
-      min-height: 75vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
-      padding: calc(var(--nav-height) + 40px) 20px 40px 20px;
-      text-align: center;
+    /* Styling specifically for the FAQ Page */
+    .faq-hero {
       position: relative;
+      padding: calc(var(--nav-height) + 80px) 0 60px 0;
+      background: radial-gradient(circle at 20% 20%, rgba(121, 200, 67, 0.04) 0%, transparent 60%), 
+                  linear-gradient(180deg, #f4f6fa 0%, #ffffff 100%);
+      text-align: center;
       overflow: hidden;
     }
 
-    .faq-page-logo {
-      display: none;
-    }
-
-    .faq-page-content {
-      max-width: 600px;
-      background-color: #ffffff;
-      padding: 60px 40px;
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border-color-card);
+    .faq-hero-content {
       position: relative;
       z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .faq-page-title {
+    .faq-hero-badge {
+      display: inline-block;
       font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--accent-dark);
-      margin-bottom: 16px;
-      letter-spacing: -1px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      background-color: rgba(121, 200, 67, 0.1);
+      padding: 6px 16px;
+      border-radius: 100px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(121, 200, 67, 0.05);
     }
 
-    .faq-page-subtitle {
+    .faq-hero-title {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--accent-dark);
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .faq-hero-title span {
+      background: linear-gradient(135deg, var(--accent-green) 0%, #4582ec 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .faq-hero-desc {
       font-family: var(--font-primary);
-      font-size: 1.05rem;
-      line-height: 1.6;
+      font-size: 1.1rem;
       color: var(--text-secondary);
-      margin-bottom: 40px;
+      line-height: 1.7;
+      margin-bottom: 35px;
       font-weight: 500;
     }
 
-    .faq-page-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-weight: 700;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      color: #ffffff;
-      background-color: var(--accent-dark);
-      border-radius: var(--border-radius-sm);
+    /* Live Search Box */
+    .faq-search-wrapper {
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .faq-search-input {
+      width: 100%;
+      padding: 16px 24px 16px 54px;
+      border-radius: 100px;
+      border: 1px solid var(--border-color-card);
+      font-family: var(--font-primary);
+      font-size: 1rem;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-sticky);
+      outline: none;
       transition: all var(--transition-fast);
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(30, 32, 36, 0.15);
     }
 
-    .faq-page-btn:hover {
-      background-color: var(--accent-dark-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(30, 32, 36, 0.25);
+    .faq-search-input:focus {
+      border-color: var(--accent-green);
+      box-shadow: 0 10px 25px rgba(121, 200, 67, 0.08);
     }
 
-    @media (max-width: 480px) {
-      .faq-page-content {
-        padding: 40px 20px;
-      }
+    .faq-search-icon {
+      position: absolute;
+      left: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
 
-      .faq-page-title {
-        font-size: 1.8rem;
-      }
+    /* FAQ Content Section */
+    .faq-grid-section {
+      background-color: #ffffff;
+      padding: 40px 0 100px 0;
+      position: relative;
+    }
+
+    /* Animation and alignment styles for filtering */
+    .faq-item {
+      transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+    }
+
+    .faq-item.fade-out {
+      opacity: 0;
+      transform: scale(0.98) translateY(5px);
+      pointer-events: none;
+    }
+
+    .faq-item.fade-in {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .faq-item.hidden {
+      display: none !important;
+    }
+
+    /* No search results display */
+    .faq-no-results {
+      text-align: center;
+      padding: 60px 0;
+      display: none;
+      color: var(--text-muted);
+    }
+
+    .faq-no-results i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--border-color-card);
+    }
+
+    .faq-no-results p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -137,19 +197,205 @@
     </div>
   </header>
 
-  <div class="faq-page-wrapper">
-    <div class="faq-page-content">
-      <h1 class="faq-page-title">Frequently Asked Questions</h1>
-      <p class="faq-page-subtitle">
-        This page lists all the answers to our most common questions regarding licensing, lifetime updates, and
-        customization. Full FAQ articles will be available here soon.
+  <!-- FAQ Hero Section -->
+  <section class="faq-hero">
+    <div class="container faq-hero-content" data-aos="fade-up">
+      <span class="faq-hero-badge">Knowledge Center</span>
+      <h1 class="faq-hero-title">Frequently Asked <span>Questions</span></h1>
+      <p class="faq-hero-desc">
+        Need assistance with Pixellers Themes? Find answers instantly regarding theme installations, extensions customization, speed performance, and licensing.
       </p>
-      <a href="index.html" class="faq-page-btn">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>Back to Home</span>
-      </a>
+
+      <!-- Live Search input -->
+      <div class="faq-search-wrapper">
+        <input type="text" id="faq-page-search" class="faq-search-input" placeholder="Search for answers...">
+        <i class="fa-solid fa-magnifying-glass faq-search-icon"></i>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- FAQ Accordions Display Grid -->
+  <section class="faq-grid-section">
+    <div class="container">
+      
+      <div class="faq-grid" data-aos="fade-up" data-aos-delay="200">
+        
+        <!-- Left Column (FAQs 1-6) -->
+        <div class="faq-col left-col">
+          
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Are the prebuilt websites fully customizable?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, all prebuilt websites are 100% customizable. You can easily edit any section, page layout, color theme, typography, and elements using drag-and-drop page builders like Elementor or WPBakery.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Where can I buy a license of Pixellers Themes?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                You can purchase an official license of Pixellers Themes exclusively through ThemeForest on the Envato Market platform. A standard license gives you lifetime updates and access to support.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>What is included with my purchase of Pixellers Themes?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Your purchase includes the main theme files, child theme files, detailed documentation, free lifetime updates, access to 150+ prebuilt e-commerce templates, and bundled premium plugins.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Which premium plugins come with Pixellers Themes?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Pixellers Themes bundles several top-tier premium plugins at no extra charge, including WPBakery Page Builder, Revolution Slider, YellowPencil, FileBird, and Premium Addons for Elementor.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Are there any recurring fees?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                No! Pixellers Themes is a one-time purchase. Once you buy the theme, you get lifetime use of the theme and lifetime updates with no subscription or recurring monthly/yearly fees.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>How can I get the support?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                You can access dedicated support via our customer ticketing center. Our expert developer support team is ready to help you with layout installations, customization queries, or technical issues.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column (FAQs 7-12) -->
+        <div class="faq-col right-col">
+          
+          <!-- FAQ 7 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is it lifetime updates included?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, every purchase includes free lifetime theme updates. Whenever we launch new prebuilt demos, features, or performance optimizations, they are immediately available for free download.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 8 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is Pixellers Themes fully compatible with Elementor Builder?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, Pixellers Themes is optimized for Elementor and works without requiring any paid Pro extensions. We also offer fully-tailored Elementor widgets and layout packs to build pages faster.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 9 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Do I need any coding skills to use Pixellers Themes?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Not at all! The theme comes with a one-click demo installation wizard and an intuitive visual options panel. You can manage layouts, headers, footers, and shop settings with zero coding.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 10 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Do you offer refunds for Pixellers Themes?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Refund requests are processed in accordance with Envato Market's refund policy. If the item is broken, malfunctioning, or has outstanding support bugs, you can request a refund.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 11 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Is Pixellers Themes translation and RTL-ready?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes! Pixellers Themes fully supports RTL (Right-to-Left) languages and is ready to translate into any language. It is also compatible with popular translation plugins like WPML and Polylang.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 12 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Can I use the Pixellers Themes theme for multiple websites?</span>
+              <span class="faq-toggle-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                A standard Envato theme license allows you to use Pixellers Themes for one single end product/website. If you want to build multiple websites for client projects, you will need to purchase separate licenses.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Search not found indicator -->
+      <div id="faq-no-results" class="faq-no-results">
+        <i class="fa-solid fa-face-frown"></i>
+        <p>No questions matched your search query.</p>
+      </div>
+
+    </div>
+  </section>
 
   <!-- Footer Section -->
   <footer class="site-footer" id="footer">
@@ -192,6 +438,54 @@
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <!-- Custom JS -->
   <script src="assets/js/main.js"></script>
+
+  <!-- Live Keyword Search JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('faq-page-search');
+      const faqItems = document.querySelectorAll('.faq-item');
+      const noResults = document.getElementById('faq-no-results');
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          let visibleCount = 0;
+
+          faqItems.forEach(item => {
+            const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+            const answerText = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+
+            if (questionText.includes(query) || answerText.includes(query)) {
+              item.classList.remove('hidden');
+              visibleCount++;
+              requestAnimationFrame(() => {
+                item.classList.remove('fade-out');
+                item.classList.add('fade-in');
+              });
+            } else {
+              item.classList.add('fade-out');
+              item.classList.remove('fade-in');
+
+              const handleTransitionEnd = (e) => {
+                if (e.propertyName === 'opacity' && item.classList.contains('fade-out')) {
+                  item.classList.add('hidden');
+                  item.removeEventListener('transitionend', handleTransitionEnd);
+                }
+              };
+              item.addEventListener('transitionend', handleTransitionEnd);
+            }
+          });
+
+          // Show/hide 'No Results' box
+          if (visibleCount === 0) {
+            noResults.style.display = 'block';
+          } else {
+            noResults.style.display = 'none';
+          }
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
