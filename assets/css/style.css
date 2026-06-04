@@ -1,5 +1,11 @@
 /* XStore Custom Stylesheet - Clean Light Theme */
 
+/* Focus indicator for keyboard navigation (a11y) */
+*:focus-visible {
+  outline: 3px solid var(--accent-green) !important;
+  outline-offset: 2px !important;
+}
+
 /* ==========================================================================
    Design Tokens
    ========================================================================== */
